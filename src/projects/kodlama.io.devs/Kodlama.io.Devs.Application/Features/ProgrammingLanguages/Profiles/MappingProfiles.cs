@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
+using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.DTOs;
 using Kodlama.io.Devs.Domain.Entities;
 
@@ -11,6 +12,8 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Profiles
         {
             CreateMap<ProgrammingLanguage, CreatedProgrammingLanguageDTO>().ReverseMap();
             CreateMap<ProgrammingLanguage, CreateProgrammingLanguageCommand>().ReverseMap();
+            CreateMap<ProgrammingLanguage, UpdatedProgrammingLanguageDTO>().ReverseMap();
+            CreateMap<ProgrammingLanguage, UpdateProgrammingLanguageCommand>().ReverseMap();
         }
     }
 }
