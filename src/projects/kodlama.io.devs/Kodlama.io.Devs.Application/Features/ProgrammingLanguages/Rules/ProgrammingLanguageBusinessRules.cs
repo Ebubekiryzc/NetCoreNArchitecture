@@ -33,5 +33,10 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Rules
             ProgrammingLanguage result = await _programmingLanguageRepository.GetAsync(p => p.Id == id);
             if (result == null) throw new BusinessException(ExceptionMessages.ProgrammingLanguageIsNull);
         }
+
+        public void ProgrammingLanguageMustExistWhenRequested(ProgrammingLanguage? programmingLanguage)
+        {
+            if (programmingLanguage == null) throw new BusinessException(ExceptionMessages.ProgrammingLanguageIsNull);
+        }
     }
 }
