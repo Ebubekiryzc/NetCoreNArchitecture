@@ -15,7 +15,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Rules
             _programmingLanguageRepository = programmingLanguageRepository;
         }
 
-        public async Task ProgrammingLanguageNameMustBeUnique(string name)
+        public async Task ProgrammingLanguageNameMustBeUniqueWhenSaving(string name)
         {
             IPaginate<ProgrammingLanguage> result = await _programmingLanguageRepository.GetListAsync(p => p.Name == name);
             if (result.Items.Any()) throw new BusinessException(ExceptionMessages.ProgrammingLanguageNameExist);
