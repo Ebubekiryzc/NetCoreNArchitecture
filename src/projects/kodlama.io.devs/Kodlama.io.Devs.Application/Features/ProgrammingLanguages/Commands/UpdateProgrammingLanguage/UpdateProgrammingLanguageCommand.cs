@@ -9,6 +9,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
 {
     public class UpdateProgrammingLanguageCommand : IRequest<UpdatedProgrammingLanguageDTO>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public class UpdateProgrammingLanguageCommandHandler : IRequestHandler<UpdateProgrammingLanguageCommand, UpdatedProgrammingLanguageDTO>
@@ -26,7 +27,8 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
 
             public async Task<UpdatedProgrammingLanguageDTO> Handle(UpdateProgrammingLanguageCommand request, CancellationToken cancellationToken)
             {
-                await _programmingLanguageBusinessRules.ProgrammingLanguageNameMustBeUniqueWhenSaving(request.Name);
+                await _programmingLanguageBusinessRules.ProgrammingLanguageNameMustBeUniqueWhenUpdating(request.Id, request.Name);
+                await _programmingLanguageBusinessRules.ProgrammingLanguageMustExistWhenRequested(request.Id);
 
                 ProgrammingLanguage mappedProgrammingLanguage = _mapper.Map<ProgrammingLanguage>(request);
                 ProgrammingLanguage updatedProgrammingLanguage = await _programmingLanguageRepository.UpdateAsync(mappedProgrammingLanguage);
