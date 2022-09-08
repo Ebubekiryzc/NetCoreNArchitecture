@@ -1,8 +1,8 @@
-﻿using System.Linq.Expressions;
-using Core.Persistence.Dynamic;
+﻿using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace Core.Persistence.Repositories;
 
@@ -17,11 +17,16 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         Context = context;
     }
 
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, bool enableTracking = true)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
+                                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+                                         bool enableTracking = false,
+                                         CancellationToken cancellationToken = default)
     {
-        if (enableTracking)
-            return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
-        return await Context.Set<TEntity>().AsNoTracking().FirstOrDefaultAsync(predicate);
+        IQueryable<TEntity> queryable = Query();
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        if (predicate != null) queryable = queryable.Where(predicate);
+        return await queryable.FirstOrDefaultAsync();
     }
 
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
@@ -81,11 +86,15 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity? Get(Expression<Func<TEntity, bool>> predicate, bool enableTracking = true)
+    public TEntity? Get(Expression<Func<TEntity, bool>> predicate,
+                        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+                        bool enableTracking = false)
     {
-        if (enableTracking)
-            return Context.Set<TEntity>().FirstOrDefault(predicate);
-        return Context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
+        IQueryable<TEntity> queryable = Query();
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        if (include != null) queryable = include(queryable);
+        if (predicate != null) queryable = queryable.Where(predicate);
+        return queryable.FirstOrDefault();
     }
 
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
