@@ -28,7 +28,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Del
             {
                 await _programmingLanguageBusinessRules.ProgrammingLanguageMustExistWhenRequested(request.Id);
 
-                ProgrammingLanguage programmingLanguageToDelete = _programmingLanguageRepository.Get(p => p.Id == request.Id);
+                ProgrammingLanguage programmingLanguageToDelete = await _programmingLanguageRepository.GetAsync(p => p.Id == request.Id);
                 ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageRepository.DeleteAsync(programmingLanguageToDelete);
                 DeletedProgrammingLanguageDTO deletedProgrammingLanguageDTO = _mapper.Map<DeletedProgrammingLanguageDTO>(deletedProgrammingLanguage);
                 return deletedProgrammingLanguageDTO;
