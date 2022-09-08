@@ -26,7 +26,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetB
 
             public async Task<ProgrammingLanguageGetByIdDTO> Handle(GetByIdProgrammingLanguageQuery request, CancellationToken cancellationToken)
             {
-                ProgrammingLanguage programmingLanguage = _programmingLanguageRepository.Get(p => p.Id == request.Id);
+                ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(p => p.Id == request.Id);
 
                 _programmingLanguageBusinessRules.ProgrammingLanguageMustExistWhenRequested(programmingLanguage);
 
