@@ -30,7 +30,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Rules
 
         public async Task ProgrammingLanguageMustExistWhenRequested(int id)
         {
-            ProgrammingLanguage result = await _programmingLanguageRepository.GetAsync(p => p.Id == id);
+            ProgrammingLanguage? result = await _programmingLanguageRepository.GetAsync(p => p.Id == id, enableTracking: false);
             if (result == null) throw new BusinessException(ExceptionMessages.ProgrammingLanguageIsNull);
         }
 
