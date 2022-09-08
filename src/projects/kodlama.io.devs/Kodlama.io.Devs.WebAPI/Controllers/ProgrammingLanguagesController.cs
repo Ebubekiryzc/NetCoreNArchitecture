@@ -1,4 +1,5 @@
 ﻿using Core.Application.Requests;
+using Core.Persistence.Dynamic;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
@@ -6,6 +7,7 @@ using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.DTOs;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Models;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetByIdProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetListProgrammingLanguage;
+using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetListProgrammingLanguageByDynamic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kodlama.io.Devs.WebAPI.Controllers
@@ -47,6 +49,14 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
         {
             GetListProgrammingLanguageQuery getListProgrammingLanguageQuery = new() { PageRequestInstance = pageRequest };
             ProgrammingLanguageListModel result = await Mediator.Send(getListProgrammingLanguageQuery);
+            return Ok(result);
+        }
+
+        [HttpPost("GetList/ByDynamic")]
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamicQuery)
+        {
+            GetListProgrammingLanguageByDynamicQuery getListProgrammingLanguageByDynamicQuery = new() { PageRequestInstance = pageRequest, Dynamic = dynamicQuery };
+            ProgrammingLanguageListModel result = await Mediator.Send(getListProgrammingLanguageByDynamicQuery);
             return Ok(result);
         }
     }
