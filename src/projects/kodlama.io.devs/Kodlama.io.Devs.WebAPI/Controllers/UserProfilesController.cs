@@ -14,7 +14,7 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserProfileController : BaseController
+    public class UserProfilesController : BaseController
     {
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateUserProfileCommand createUserProfileCommand)
