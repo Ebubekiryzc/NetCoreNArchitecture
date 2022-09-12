@@ -3,7 +3,6 @@ using Core.Persistence.Paging;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Constants;
 using Kodlama.io.Devs.Application.Services.Repositories.EntityFramework;
 using Kodlama.io.Devs.Domain.Entities;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Rules
 {
