@@ -17,4 +17,8 @@
 		<ProjectReference Include="..\Kodlama.io.Devs.Domain\Kodlama.io.Devs.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\Authentication\Models\" />
+	</ItemGroup>
+
 </Project>
